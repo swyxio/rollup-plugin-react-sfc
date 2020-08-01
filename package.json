@@ -11,8 +11,12 @@
   ],
   "scripts": {
     "test": "mocha",
+    "dev": "nodemon dev.js --watch test/default/src/MyButton.react",
     "lint": "eslint index.js",
-    "prepublishOnly": "npm run lint && npm test"
+    "notyetprepublishOnly": "npm run lint && npm test"
+  },
+  "nodemonConfig": {
+    "ignore": ["test/default/dist/*"]
   },
   "keywords": [
     "rollup-plugin"
@@ -31,6 +35,7 @@
     "estree-walker": "^2.0.1",
     "magic-string": "^0.25.7",
     "mocha": "^8.1.0",
+    "nodemon": "^2.0.4",
     "rollup": "^2.23.0",
     "sander": "^0.6.0",
     "source-map": "^0.7.3"

@@ -1,3 +1,6 @@
 import MyButton from './MyButton.react';
+import ReactDOM from 'react-dom'
 
-console.log(MyButton)
+ReactDOM.render(document.getElementById('app'), 
+React.createElement(MyButton) // so that rollup includes it in bundle
+)

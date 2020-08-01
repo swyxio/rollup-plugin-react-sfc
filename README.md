@@ -26,3 +26,4 @@
 
 misc inspo
 - https://github.com/yuchi/hooks.macro
+- detour to babel: https://astexplorer.net/#/gist/23730d63bb02a39393bf3dba270d18e6/fc1cc76e0b6e56d8e9be8520c06ab077a7717dd6
