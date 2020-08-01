@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-react-sfc",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "a rollup plugin for react sfcs",
   "main": "index.js",
   "files": [
@@ -12,6 +12,8 @@
     "test": "mocha",
     "dev": "nodemon dev.js --watch test/default/src/MyButton.react",
     "lint": "eslint index.js",
+    "version": "auto-changelog -p --template keepachangelog && git add CHANGELOG.md",
+    "prepublishOnly": "git push && git push --tags && gh-release",
     "notyetprepublishOnly": "npm run lint && npm test"
   },
   "nodemonConfig": {
@@ -32,8 +34,10 @@
   "devDependencies": {
     "@rollup/pluginutils": "^3.1.0",
     "acorn-jsx": "^5.2.0",
+    "auto-changelog": "^2.2.0",
     "eslint": "^7.5.0",
     "estree-walker": "^2.0.1",
+    "gh-release": "^3.5.0",
     "magic-string": "^0.25.7",
     "mocha": "^8.1.0",
     "nodemon": "^2.0.4",
