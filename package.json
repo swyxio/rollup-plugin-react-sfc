@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-react-sfc",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "a rollup plugin for react sfcs",
   "main": "index.js",
   "files": [
@@ -15,7 +15,9 @@
     "notyetprepublishOnly": "npm run lint && npm test"
   },
   "nodemonConfig": {
-    "ignore": ["test/default/dist/*"]
+    "ignore": [
+      "test/default/dist/*"
+    ]
   },
   "keywords": [
     "rollup-plugin"
