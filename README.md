@@ -1,12 +1,14 @@
 # a rollup plugin for react sfcs
 
-> ⚠️ THIS PACKAGE DOES NOT WORK YET. JUST STUBBING OUT THE PACKAGE IN CASE I FOLLOW UP ON IT.
+NPM: http://npm.im/rollup-plugin-react-sfc
+
+> ⚠️ THIS PACKAGE IS JUST A PROOF OF CONCEPT. IT WORKS ONLY ON TEST CASES SHOWN IN THE REPO.
 
 - https://gist.github.com/sw-yx/b30d7e6bdcc2575f8f02d7fa8afcb587#domain-specific-react
 - https://github.com/react-sfc/react-sfc-proposal
 
 
-## helpful resource used making this
+## helpful resources used in making this
 
 - make plugin design
   - https://github.com/elemental-design/rollup-plugin-mdx/blob/master/src/index.js
