@@ -3,7 +3,22 @@ const path = require('path')
 const fs = require('fs')
 const {walk} = require('estree-walker')
 const { default: MagicString } = require('magic-string')
-// var jsx = require('jsx-transform');
+
+
+const hooks = [
+"useState",
+"useEffect",
+"useContext",
+"useReducer",
+"useCallback",
+"useMemo",
+"useRef",
+"useImperativeHandle",
+"useLayoutEffect",
+"useDebugValue"
+]
+
+
 module.exports =  function reactSFC(options = {}) {
 	const filter = createFilter(options.include, options.exclude);
 
@@ -44,6 +59,12 @@ module.exports =  function reactSFC(options = {}) {
       let assignmentsMap = new Map()
       walk(ast, {
         enter(node, parent, prop, index) {
+          if (node.type === 'CallExpression') {
+            if (hooks.some(hook => node.callee.name === hook)) {
+              ms.prependLeft(node.callee.start, 'React.')
+            }
+          }
+
           if (node.type === 'ExportNamedDeclaration') {
             if (node.declaration.declarations[0].id.name === 'STYLE') {
               STYLEDECLARATION = node
@@ -104,7 +125,8 @@ module.exports =  function reactSFC(options = {}) {
       if (stateMap.size) {
         stateMap.forEach(({node, value}, key) => {
           ms.remove(node.start, node.end)
-          let temp = `\nconst [${key}, set${key}] = React.useState(${value})`
+          // should be 'let' bc we want to mutate it
+          let temp = `\nlet [${key}, set${key}] = React.useState(${value})`
           ms.appendRight(pos_HeadOfDefault, temp)
         })
       }
