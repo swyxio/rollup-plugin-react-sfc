@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-react-sfc",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "a rollup plugin for react sfcs",
   "main": "index.js",
   "files": [
