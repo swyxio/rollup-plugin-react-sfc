@@ -162,8 +162,8 @@ module.exports =  function reactSFC(options = {}) {
           // https://stackoverflow.com/questions/57659640/is-there-any-way-to-see-names-of-fields-in-react-multiple-state-with-react-dev
           ms.append(`
 function useStateWithLabel(initialValue, name) {
-  const [value, setValue] = useState(initialValue);
-  useDebugValue(name + ': ' + value);
+  const [value, setValue] = React.useState(initialValue);
+  React.useDebugValue(name + ': ' + value);
   return [value, setValue];
 }
           `)
