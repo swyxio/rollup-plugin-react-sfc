@@ -24,9 +24,12 @@ module.exports =  function reactSFC(options = {}) {
 	const filter = createFilter(options.include, options.exclude);
   const fileExtensions = [".react", ".jswyx"]
   
+  const isProduction = false // TODO: figure out how to get this from rollup
+
   // undocumented option - tbd if we actually want to let users configure
   // TODO: can make it dev-only, or maybe also useful in prod?
-  const userWantsUSWL = options.useStateWithLabel || true
+  const userWantsUSWL = options.useStateWithLabel || !isProduction
+
 
   return {
     name: 'react-sfc',
