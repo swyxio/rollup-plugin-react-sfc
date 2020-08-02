@@ -1,6 +1,7 @@
-
+import * as React from 'react'
 
 let $count = 23
+let $text = 'hello'
 
 export const STYLE = `
 div {
@@ -14,6 +15,7 @@ export default () => {
   return (
   <div>
     Some Text
+  	<input $value={$text} />
     <MyButton onClick={() => ++$count}>
       Count {$count}
     </MyButton>

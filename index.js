@@ -3,6 +3,7 @@ const path = require('path')
 const fs = require('fs')
 const {walk} = require('estree-walker')
 const { default: MagicString } = require('magic-string')
+const { join } = require('path')
 
 
 const hooks = [
@@ -21,8 +22,11 @@ const hooks = [
 
 module.exports =  function reactSFC(options = {}) {
 	const filter = createFilter(options.include, options.exclude);
-
   const fileExtensions = [".react", ".jswyx"]
+  
+  // undocumented option - tbd if we actually want to let users configure
+  // TODO: can make it dev-only, or maybe also useful in prod?
+  const userWantsUSWL = options.useStateWithLabel || true
 
   return {
     name: 'react-sfc',
@@ -52,13 +56,20 @@ module.exports =  function reactSFC(options = {}) {
 
       const ast = this.parse(code);
       let ms = new MagicString(code)
-      ms.prepend(`import React from 'react'`)
+      
       let STYLECONTENT, STYLEDECLARATION
       let lastChildofDefault, pos_HeadOfDefault
       let stateMap = new Map()
       let assignmentsMap = new Map()
+      let bindValuesMap = new Map()
+      let isReactImported = false
       walk(ast, {
         enter(node, parent, prop, index) {
+          if (node.type === 'ImportDeclaration') {
+            if (node.source.value === 'react') isReactImported = true
+            // TODO: check that the name React is actually defined!
+            // most people will not run into this, but you could be nasty
+          }
           if (node.type === 'CallExpression') {
             if (hooks.some(hook => node.callee.name === hook)) {
               ms.prependLeft(node.callee.start, 'React.')
@@ -74,7 +85,6 @@ module.exports =  function reactSFC(options = {}) {
           }
           if (node.type === 'ExportDefaultDeclaration') {
             let RSArg = node.declaration.body.body.find(x => x.type==='ReturnStatement').argument
-            let lastChildofDefault
             if (RSArg.type === 'JSXElement') lastChildofDefault = RSArg.children.slice(-1)[0] // use start and end
             else throw new Error('not returning JSX in export default function') // TODO: fix this?
 
@@ -108,6 +118,25 @@ module.exports =  function reactSFC(options = {}) {
               })
             }
           }
+
+          // BINDING
+          if (node.type === 'JSXAttribute') {
+            // // bind:value syntax - we may want to use this
+            // if (node.name.type === 'JSXNamespacedName' && node.name.namespace.name === 'bind') {
+            //   bindValuesMap.set(node // to replace
+            //     , {
+            //     LHSname: node.name.name.name, // right now will basically only work for 'value'
+            //     RHSname: ms.slice(node.value.expression.start, node.value.expression.end)
+            //   })
+            // }
+            if (node.name.type === 'JSXIdentifier' && node.name.name.startsWith('$')) {
+              bindValuesMap.set(node // to replace
+                , {
+                LHSname: node.name.name, // only tested to work for 'value'
+                RHSname: ms.slice(node.value.expression.start, node.value.expression.end)
+              })
+            }
+          }
         },
         // leave(node) {
         //   // if (node.scope) scope = scope.parent;
@@ -119,6 +148,7 @@ module.exports =  function reactSFC(options = {}) {
       // process it!
       
       */
+     if (!isReactImported) ms.prepend(`import React from 'react'`)
       // remove STYLE and insert style jsx
       if (STYLEDECLARATION && STYLECONTENT) {
         ms.remove(STYLEDECLARATION.start, STYLEDECLARATION.end)
@@ -127,11 +157,29 @@ module.exports =  function reactSFC(options = {}) {
       
       // useState
       if (stateMap.size) {
+        if (userWantsUSWL) {
+          // inject uSWL only once
+          // https://stackoverflow.com/questions/57659640/is-there-any-way-to-see-names-of-fields-in-react-multiple-state-with-react-dev
+          ms.append(`
+function useStateWithLabel(initialValue, name) {
+  const [value, setValue] = useState(initialValue);
+  useDebugValue(name + ': ' + value);
+  return [value, setValue];
+}
+          `)
+        }
+        // for each state hook
         stateMap.forEach(({node, value}, key) => {
           ms.remove(node.start, node.end)
-          // should be 'let' bc we want to mutate it
-          let temp = `\nlet [${key}, set${key}] = React.useState(${value})`
-          ms.appendRight(pos_HeadOfDefault, temp)
+          let newStr
+          if (userWantsUSWL) {
+            // should be 'let' bc we want to mutate it
+            newStr = `\nlet [${key}, set${key}] = useStateWithLabel(${value}, "${key}")`
+          } else {
+            // should be 'let' bc we want to mutate it
+            newStr = `\nlet [${key}, set${key}] = React.useState(${value})`
+          }
+          ms.appendRight(pos_HeadOfDefault, newStr)
         })
       }
 
@@ -144,6 +192,13 @@ module.exports =  function reactSFC(options = {}) {
           // ($count = $count + 1, set$count($count))
           ms.prependLeft(node.start, '(')
           ms.appendRight(node.end, `, set${key}(${key}))`)
+        })
+      }
+
+      // binding
+      if (bindValuesMap.size) {
+        bindValuesMap.forEach(({LHSname, RHSname}, node) => {
+          ms.overwrite(node.start, node.end, `${LHSname}={${RHSname}} onChange={e => set${RHSname}(e.target.${LHSname})}`)
         })
       }
 

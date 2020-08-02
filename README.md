@@ -18,8 +18,23 @@ take a rollup react app ([example](https://github.com/sw-yx/rollup-react-boilerp
 npm i -D rollup-plugin-react-sfc  
 ```
 
+Then also make sure you have [styled-jsx](https://github.com/vercel/styled-jsx) setup. We have a hard dependency on styled-jsx to do css-in-js for the time being.
 
+## Features implemented
 
+- Automatic react import
+- mutable useState $syntax
+- useStateWithLabel hook replaces useState
+- Dynamic CSS transform to styled-JSX
+- `$value={$text}` for onChange
+
+TODO:
+
+- static CSS export (most important!)
+- useEffect dependency tracking
+- nothing graphql related yet
+- $value shorthand eg `$value`
+- $value generalized eg `$style`
 
 ## helpful resources used in making this
 
