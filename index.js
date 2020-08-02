@@ -73,7 +73,11 @@ module.exports =  function reactSFC(options = {}) {
             }
           }
           if (node.type === 'ExportDefaultDeclaration') {
-            lastChildofDefault = node.declaration.body.body.find(x => x.type==='ReturnStatement').argument.children.slice(-1)[0] // use start and end
+            let RSArg = node.declaration.body.body.find(x => x.type==='ReturnStatement').argument
+            let lastChildofDefault
+            if (RSArg.type === 'JSXElement') lastChildofDefault = RSArg.children.slice(-1)[0] // use start and end
+            else throw new Error('not returning JSX in export default function') // TODO: fix this?
+
             pos_HeadOfDefault = node.declaration.body.start + 1
           }
           if (node.type === 'VariableDeclaration') {

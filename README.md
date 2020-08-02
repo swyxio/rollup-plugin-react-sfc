@@ -7,6 +7,19 @@ NPM: http://npm.im/rollup-plugin-react-sfc
 - https://gist.github.com/sw-yx/b30d7e6bdcc2575f8f02d7fa8afcb587#domain-specific-react
 - https://github.com/react-sfc/react-sfc-proposal
 
+![image](https://user-images.githubusercontent.com/6764957/89126435-3c8c9900-d518-11ea-93b2-9f2f7df14db5.png)
+
+
+## usage
+
+take a rollup react app ([example](https://github.com/sw-yx/rollup-react-boilerplate))
+
+```bash
+npm i -D rollup-plugin-react-sfc  
+```
+
+
+
 
 ## helpful resources used in making this
 
@@ -29,3 +42,8 @@ NPM: http://npm.im/rollup-plugin-react-sfc
 misc inspo
 - https://github.com/yuchi/hooks.macro
 - detour to babel: https://astexplorer.net/#/gist/23730d63bb02a39393bf3dba270d18e6/fc1cc76e0b6e56d8e9be8520c06ab077a7717dd6
+
+
+notes to self
+
+- does not work with vite - no rollup in dev
