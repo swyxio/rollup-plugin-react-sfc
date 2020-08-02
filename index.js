@@ -157,25 +157,23 @@ module.exports =  function reactSFC(options = {}) {
       
       // useState
       if (stateMap.size) {
-        if (userWantsUSWL) {
-          // inject uSWL only once
-          // https://stackoverflow.com/questions/57659640/is-there-any-way-to-see-names-of-fields-in-react-multiple-state-with-react-dev
-          ms.append(`
-function useStateWithLabel(initialValue, name) {
-  const [value, setValue] = React.useState(initialValue);
-  React.useDebugValue(name + ': ' + value);
-  return [value, setValue];
-}
-          `)
-        }
         // for each state hook
         stateMap.forEach(({node, value}, key) => {
           ms.remove(node.start, node.end)
           let newStr
           if (userWantsUSWL) {
             // should be 'let' bc we want to mutate it
-            newStr = `\nlet [${key}, set${key}] = useStateWithLabel(${value}, "${key}")`
+            newStr = `\nlet [${key}, set${key}] = use${key}_State(${value})`
+            // i would like to use only one instance, of useStateWithLabel
+            // https://stackoverflow.com/questions/57659640/is-there-any-way-to-see-names-of-fields-in-react-multiple-state-with-react-dev
+            // but currently devtools uses the NAME OF THE HOOK for state hooks
+            // rather than useDebugValue. so we do a simple alias of the hook
+          ms.append(`
+function use${key}_State(v) {
+  return React.useState(v);
+}`)
           } else {
+            // just plain useState
             // should be 'let' bc we want to mutate it
             newStr = `\nlet [${key}, set${key}] = React.useState(${value})`
           }
