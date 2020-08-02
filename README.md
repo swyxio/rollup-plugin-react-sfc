@@ -31,6 +31,7 @@ Then also make sure you have [styled-jsx](https://github.com/vercel/styled-jsx) 
 TODO:
 
 - static CSS export (most important!)
+- it does not properly work with `styled-jsx` in rollup - need [SUPER hacky shit](https://twitter.com/swyx/status/1290055528068952064) to work (see boilerplate's index.html)
 - useEffect dependency tracking
 - nothing graphql related yet
 - $value shorthand eg `$value`
