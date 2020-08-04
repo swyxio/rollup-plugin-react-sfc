@@ -26,7 +26,8 @@ Then also make sure you have [styled-jsx](https://github.com/vercel/styled-jsx) 
 - mutable useState $syntax
 - useStateWithLabel hook replaces useState
 - Dynamic CSS transform to styled-JSX
-- `$value={$text}` for onChange
+- `$value={$text}` binding for onChange. 
+  - this works for nested properties eg `$value={$text.foo}`
 
 TODO:
 

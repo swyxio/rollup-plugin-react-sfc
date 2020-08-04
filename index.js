@@ -133,10 +133,25 @@ module.exports =  function reactSFC(options = {}) {
             //   })
             // }
             if (node.name.type === 'JSXIdentifier' && node.name.name.startsWith('$')) {
+              let RHSobject, RHSname
+              if (node.value.expression.type === 'Identifier') {
+                // RHS is just an identifier
+                RHSname = node.value.expression.name
+              } else if (node.value.expression.type === "MemberExpression") {
+                // RHS is an object access
+                RHSobject = {
+                  objectName: node.value.expression.object.name,
+                  fullAccessName: ms.slice(node.value.expression.start, node.value.expression.end)
+                }
+              } else {
+                throw new Error ('warning - unrecognized RHS expression type in binding: ' + node.value.expression.type + '. We will probably do this wrong, pls report this along with your code')
+              }
+
               bindValuesMap.set(node // to replace
                 , {
-                LHSname: node.name.name, // only tested to work for 'value'
-                RHSname: ms.slice(node.value.expression.start, node.value.expression.end)
+                LHSname: node.name.name.slice(1), // only tested to work for 'value'. remove the leading $
+                RHSname,
+                RHSobject
               })
             }
           }
@@ -198,8 +213,15 @@ function use${key}_State(v) {
 
       // binding
       if (bindValuesMap.size) {
-        bindValuesMap.forEach(({LHSname, RHSname}, node) => {
-          ms.overwrite(node.start, node.end, `${LHSname}={${RHSname}} onChange={e => set${RHSname}(e.target.${LHSname})}`)
+        bindValuesMap.forEach(({LHSname, RHSname, RHSobject}, node) => {
+          if (RHSobject) {
+            // mutate the object, THEN set it
+            ms.overwrite(node.start, node.end, `${LHSname}={${RHSobject.fullAccessName}} onChange={e => (${RHSobject.fullAccessName} = e.target.${LHSname}, set${RHSobject.objectName}(${RHSobject.objectName}))}`)
+          } else if (RHSname) {
+            ms.overwrite(node.start, node.end, `${LHSname}={${RHSname}} onChange={e => set${RHSname}(e.target.${LHSname})}`)
+          } else {
+            throw new Error("we should not get here. pls repurt this binding bug")
+          }
         })
       }
 
