@@ -3,7 +3,9 @@ import * as React from 'react'
 let $count = 23
 let $text = {
   foo: 1,
-  djs: 3
+  moo: {
+    djs: 3
+  }
 }
 
 export const STYLE = `
@@ -18,7 +20,7 @@ export default () => {
   return (
   <div>
     Some Text
-  	<input $value={$text.foskdjwo} />
+  	<input $value={$text.moo.djs} />
     <MyButton onClick={() => ++$count}>
       Count {$count}
     </MyButton>

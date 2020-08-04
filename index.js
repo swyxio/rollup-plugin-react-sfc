@@ -143,7 +143,7 @@ module.exports =  function reactSFC(options = {}) {
               } else if (node.value.expression.type === "MemberExpression") {
                 // RHS is an object access
                 RHSobject = {
-                  objectName: node.value.expression.object.name,
+                  objectName: node.value.expression.object.name || node.value.expression.object.object.name, // either its an identifier '$foo.bar` or a memberexpression `$foo.bar.baz`
                   fullAccessName: ms.slice(node.value.expression.start, node.value.expression.end)
                 }
               } else {
