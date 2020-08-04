@@ -93,12 +93,15 @@ module.exports =  function reactSFC(options = {}) {
 
             pos_HeadOfDefault = node.declaration.body.start + 1
           }
+
+
+          // usestate
           if (node.type === 'VariableDeclaration') {
             let dec = node.declarations[0]
             if (dec.id.name.startsWith('$')) {
               stateMap.set(dec.id.name, {
                 node, // for replacement
-                value: dec.init.raw // for use in templating
+                value: ms.slice(dec.init.start, dec.init.end) // for use in templating
               })
             }
           }

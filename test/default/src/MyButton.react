@@ -1,7 +1,10 @@
 import * as React from 'react'
 
 let $count = 23
-let $text = 'hello'
+let $text = {
+  foo: 1,
+  djs: 3
+}
 
 export const STYLE = `
 div {
