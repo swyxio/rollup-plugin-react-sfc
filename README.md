@@ -22,20 +22,22 @@ Then also make sure you have [styled-jsx](https://github.com/vercel/styled-jsx) 
 
 ## Features implemented
 
-- Automatic react import
-- mutable useState $syntax
-- useStateWithLabel hook replaces useState
-- Dynamic CSS transform to styled-JSX
-- `$value={$text}` for onChange
+- [x] Automatic react import
+- [x] mutable useState $syntax
+- [x] useStateWithLabel hook replaces useState
+- [x] Dynamic CSS transform to styled-JSX
+- [x] `$value={$text}` for onChange
 
 TODO:
 
-- static CSS export (most important!)
-- it does not properly work with `styled-jsx` in rollup - need [SUPER hacky shit](https://twitter.com/swyx/status/1290055528068952064) to work (see boilerplate's index.html)
-- useEffect dependency tracking
-- nothing graphql related yet
-- $value shorthand eg `$value`
-- $value generalized eg `$style`
+- [ ] static CSS export (most important!)
+- [ ] it does not properly work with `styled-jsx` in rollup - need [SUPER hacky shit](https://twitter.com/swyx/status/1290055528068952064) to work (see boilerplate's index.html)
+- [ ] useEffect dependency tracking
+- [ ] nothing graphql related yet
+- [ ] optional `css` no-op function for syntax highlighting in JS
+- [ ] $value shorthand eg `$value`
+- [ ] $value generalized eg `$style`
+- [ ] set displayName based on fileName?
 
 ## helpful resources used in making this
 
