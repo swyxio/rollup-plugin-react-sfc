@@ -12,7 +12,7 @@ NPM: http://npm.im/rollup-plugin-react-sfc
 
 ## usage
 
-take a rollup react app ([example](https://github.com/sw-yx/rollup-react-boilerplate))
+take a rollup react app ([try it out in this example](https://github.com/sw-yx/rollup-react-boilerplate))
 
 ```bash
 npm i -D rollup-plugin-react-sfc  
@@ -64,4 +64,4 @@ misc inspo
 
 notes to self
 
-- does not work with vite - no rollup in dev
+- does not work with vite - no rollup in dev - but maybe can use vite's transform https://github.com/vitejs/vite/issues/657
