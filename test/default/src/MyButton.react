@@ -18,7 +18,7 @@ export default () => {
   return (
   <div>
     Some Text
-  	<input $value={$text} />
+  	<input $value={$text.foskdjwo} />
     <MyButton onClick={() => ++$count}>
       Count {$count}
     </MyButton>

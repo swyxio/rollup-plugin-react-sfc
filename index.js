@@ -218,8 +218,14 @@ function use${key}_State(v) {
       if (bindValuesMap.size) {
         bindValuesMap.forEach(({LHSname, RHSname, RHSobject}, node) => {
           if (RHSobject) {
-            // mutate the object, THEN set it
-            ms.overwrite(node.start, node.end, `${LHSname}={${RHSobject.fullAccessName}} onChange={e => (${RHSobject.fullAccessName} = e.target.${LHSname}, set${RHSobject.objectName}(${RHSobject.objectName}))}`)
+            // create new object, mutate new object, THEN set it
+            // must be new object or react doesnt rerender
+            ms.overwrite(node.start, node.end, `${LHSname}={${RHSobject.fullAccessName}} 
+            onChange={e => {
+              let temp = Object.assign({}, ${RHSobject.objectName});
+              temp${RHSobject.fullAccessName.slice(RHSobject.objectName.length)} = e.target.${LHSname};
+              set${RHSobject.objectName}(temp);
+            }}`)
           } else if (RHSname) {
             ms.overwrite(node.start, node.end, `${LHSname}={${RHSname}} onChange={e => set${RHSname}(e.target.${LHSname})}`)
           } else {
