@@ -12,7 +12,7 @@ NPM: http://npm.im/rollup-plugin-react-sfc
 
 ## usage
 
-take a rollup react app ([example](https://github.com/sw-yx/rollup-react-boilerplate))
+take a rollup react app ([try it out in this example](https://github.com/sw-yx/rollup-react-boilerplate))
 
 ```bash
 npm i -D rollup-plugin-react-sfc  
@@ -22,21 +22,23 @@ Then also make sure you have [styled-jsx](https://github.com/vercel/styled-jsx) 
 
 ## Features implemented
 
-- Automatic react import
-- mutable useState $syntax
-- useStateWithLabel hook replaces useState
-- Dynamic CSS transform to styled-JSX
-- `$value={$text}` binding for onChange. 
+- [x] Automatic react import
+- [x] mutable useState $syntax
+- [x] useStateWithLabel hook replaces useState
+- [x] Dynamic CSS transform to styled-JSX
+- [x] `$value={$text}` binding for onChange
   - this works for nested properties eg `$value={$text.foo}`
 
 TODO:
 
-- static CSS export (most important!)
-- it does not properly work with `styled-jsx` in rollup - need [SUPER hacky shit](https://twitter.com/swyx/status/1290055528068952064) to work (see boilerplate's index.html)
-- useEffect dependency tracking
-- nothing graphql related yet
-- $value shorthand eg `$value`
-- $value generalized eg `$style`
+- [ ] static CSS export (most important!)
+- [ ] it does not properly work with `styled-jsx` in rollup - need [SUPER hacky shit](https://twitter.com/swyx/status/1290055528068952064) to work (see boilerplate's index.html)
+- [ ] useEffect dependency tracking
+- [ ] nothing graphql related yet
+- [ ] optional `css` no-op function for syntax highlighting in JS
+- [ ] $value shorthand eg `$value`
+- [ ] $value generalized eg `$style`
+- [ ] set displayName based on fileName?
 
 ## helpful resources used in making this
 
@@ -63,4 +65,4 @@ misc inspo
 
 notes to self
 
-- does not work with vite - no rollup in dev
+- does not work with vite - no rollup in dev - but maybe can use vite's transform https://github.com/vitejs/vite/issues/657
