@@ -26,7 +26,9 @@
   ],
   "author": "swyx",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "react-sfc": "0.0.1"
+  },
   "peerDependencies": {
     "react": ">=16.8.0",
     "@rollup/pluginutils": "^3.1.0",
@@ -36,9 +38,7 @@
   "devDependencies": {
     "auto-changelog": "^2.2.0",
     "eslint": "^7.5.0",
-    "estree-walker": "^2.0.1",
     "gh-release": "^3.5.0",
-    "magic-string": "^0.25.7",
     "mocha": "^8.1.0",
     "nodemon": "^2.0.4",
     "rollup": "^2.23.0",
