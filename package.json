@@ -27,12 +27,12 @@
   "author": "swyx",
   "license": "MIT",
   "dependencies": {
-    "react-sfc": "0.0.1"
+    "@rollup/pluginutils": "^3.1.0",
+    "acorn-jsx": "^5.2.0",
+    "react-sfc": "0.0.2"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
-    "@rollup/pluginutils": "^3.1.0",
-    "acorn-jsx": "^5.2.0",
     "rollup": ">=0.60.0"
   },
   "devDependencies": {

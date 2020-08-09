@@ -19,6 +19,7 @@ try {
     acornInjectPlugins: [
       require('acorn-jsx')()
     ],
+    external: ['react', 'react-dom'],
     plugins: [
     // 	babel({
     // 		presets: [

@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-let $count = 23
-let $text = {
+let _count = 23
+let _text = {
   foo: 1,
   moo: {
     djs: 3
@@ -10,7 +10,7 @@ let $text = {
 
 export const STYLE = `
 div {
-	color: ${$count > 5 ? 'blue' : 'green'};
+	color: ${_count > 5 ? 'blue' : 'green'};
 }
 `
 
@@ -20,8 +20,8 @@ export default () => {
   return (
   <div>
     Some Text
-  	<input $value={$text.moo.djs} />
-    <MyButton onClick={() => ++$count}>
+  	<input $value={_text.moo.djs}> sldkj </input>
+    <MyButton onClick={() => ++_count}>
       Count {$count}
     </MyButton>
   </div>

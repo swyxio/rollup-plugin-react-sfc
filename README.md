@@ -22,12 +22,7 @@ Then also make sure you have [styled-jsx](https://github.com/vercel/styled-jsx) 
 
 ## Features implemented
 
-- [x] Automatic react import
-- [x] mutable useState $syntax
-- [x] useStateWithLabel hook replaces useState
-- [x] Dynamic CSS transform to styled-JSX
-- [x] `$value={$text}` binding for onChange
-  - this works for nested properties eg `$value={$text.foo}`
+- [x] uses `react-sfc` properly
 
 TODO:
 
