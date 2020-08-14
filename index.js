@@ -11,17 +11,22 @@ module.exports = function reactSFC(options = {}) {
 
   // undocumented option - tbd if we actually want to let users configure
   // TODO: can make it dev-only, or maybe also useful in prod?
-  const userWantsUSWL = options.useStateWithLabel || !isProduction;
+  const userWantsUSWL = options.useStateWithLabel || !isProduction;;
 
   return {
     name: "react-sfc",
     transform(code, id) {
       if (!filter(id)) return null;
       if (!~fileExtensions.indexOf(path.extname(id))) return null;
+      let componentDisplayName = options.showComponentDisplayName && path.basename(id, path.extname(id)).replace(' ', '_')
+      // TODO - make this display name safer
       const { js, css } = Compiler({
         code,
         parser: this.parse,
-        useStateWithLabel: userWantsUSWL,
+        options: {
+          useStateWithLabel: userWantsUSWL,
+          componentDisplayName,
+        }
       });
       // TODO: handle this.emitFile(css)
 

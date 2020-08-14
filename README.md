@@ -18,11 +18,33 @@ take a rollup react app ([try it out in this example](https://github.com/sw-yx/r
 npm i -D rollup-plugin-react-sfc  
 ```
 
-Then also make sure you have [styled-jsx](https://github.com/vercel/styled-jsx) setup. We have a hard dependency on styled-jsx to do css-in-js for the time being.
+FOR NOW - make sure you have [styled-jsx](https://github.com/vercel/styled-jsx) setup. We have a hard dependency on styled-jsx to do css-in-js for the time being. It is tricky to set up - see https://github.com/sw-yx/rollup-react-boilerplate for how I did it. It's super janky right now, sorry!!
+
+```js
+// example rollup.config.js
+import SFC from 'rollup-plugin-react-sfc'
+export default () => {
+  //...
+  plugins: [
+  // 	babel({
+  // 		presets: [
+  // 			'react-app',
+  // 		],
+  // 		exclude: 'node_modules/**',
+  // 		runtimeHelpers: true,
+  // 	}),
+    // plugin(/* options */)
+    SFC({
+      showComponentDisplayName: true
+    })
+  ]
+}
+```
 
 ## Features implemented
 
 - [x] uses `react-sfc` properly
+- [x] set displayName based on fileName?
 
 TODO:
 
@@ -33,7 +55,6 @@ TODO:
 - [ ] optional `css` no-op function for syntax highlighting in JS
 - [ ] $value shorthand eg `$value`
 - [ ] $value generalized eg `$style`
-- [ ] set displayName based on fileName?
 
 ## helpful resources used in making this
 

@@ -28,7 +28,10 @@ try {
     // 		exclude: 'node_modules/**',
     // 		runtimeHelpers: true,
     // 	}),
-      plugin(/* options */)
+      // plugin(/* options */)
+      plugin({
+        showComponentDisplayName: true
+      })
     ]
   });
 

@@ -3,9 +3,7 @@ import * as React from 'react'
 let _count = 23
 let _text = {
   foo: 1,
-  moo: {
-    djs: 3
-  }
+  moo: 2
 }
 
 export const STYLE = `
